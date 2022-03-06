@@ -1,0 +1,133 @@
+#include<iostream>
+#include<string>
+#include<iomanip>
+
+using namespace std;
+
+void draw(char board[][100], int m, int n);
+int main() {
+	int m, n;
+	cin >> m >> n;
+	char board[100][100];
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			board[i][j] = '*';
+		}
+	}
+	int w, x, y, x2, y2;
+	char fig;
+	string dir;
+	while (cin >> fig) {
+		if (fig == 'S') {
+			cin >> w >> x >> y;
+			if (w == 1) {
+				board[y][x] = 'X';
+			}
+			else if (w > m || w > n || x > m || y > n || (x + w) > m || (x - w) > m || (y + w) > n || (y - w) > n) {
+				cout << "Out of range.\n" << "\n";
+				continue;
+			}
+			else {
+				for (int i = 0; i < w; i++) {
+					for (int j = 0; j < w; j++) {
+						board[i + y][j + x] = 'X';
+					}
+				}
+			}
+			draw(board, m, n);
+		}
+		else if (fig == 'T') {
+			cin >> w >> x >> y >> dir;
+			if (w == 1) {
+				board[y][x] = 'X';
+			}
+			else if (w > m || w > n || x > m || y > n || (x + w) > m || (x - w) > m || (y + w) > n || (y - w) > n) {
+				cout << "Out of range.\n" << "\n";
+				continue;
+			}
+			else {
+				if (dir == "RU") {
+					for (int i = 0; i < w; i++) {
+						for (int j = 0; j < w; j++) {
+							board[y - i][x + j] = 'X';
+						}
+					}
+					for (int i = 0; i < w - 1; i++) {
+						for (int j = 0; j < w - 1 && j < i; j++) {
+							board[i][w - j - 1] = '*';
+						}
+					}
+				}
+				else if (dir == "RD") {
+					for (int i = 0; i < w; i++) {
+						for (int j = 0; j < w; j++) {
+							board[y + i][x + j] = 'X';
+						}
+					}
+					for (int i = 0; i < w - 1; i++) {
+						for (int j = 0; j < w - 1; j++) {
+							board[w - i - 1][w - j - 1] = '*';
+						}
+					}
+				}
+				else if (dir == "LD") {
+					for (int i = 0; i < w; i++) {
+						for (int j = 0; j < w; j++) {
+							board[y + i][x - j] = 'X';
+						}
+					}
+					for (int i = 0; i < w - 1; i++) {
+						for (int j = 0; j < w - 1 && j < i; j++) {
+							board[w - i - 1][j] = '*';
+						}
+					}
+				}
+				else {
+					for (int i = 0; i < w; i++) {
+						for (int j = 0; j < w; j++) {
+							board[y - i][x - j] = 'X';
+						}
+					}
+					for (int i = 0; i < w - 1; i++) {
+						for (int j = 0; j < w - 1; j++) {
+							board[i][j] = '*';
+						}
+					}
+				}
+			}
+			draw(board, m, n);
+		}
+		else if (fig == 'L') {
+			cin >> x >> y >> x2 >> y2;
+			if (x == x2 || y == y2) {
+				board[y][x] = 'X';
+			}
+			else if (x > m || y > n || x2 > m || y2 > n || fabs(x - x2) > m || fabs(y - y2) > n || (x + fabs(x - x2)) > m || (x - fabs(x - x2)) > m || (y + fabs(y - y2)) > n || (y - fabs(y - y2)) > n) {
+				cout << "Out of range.\n" << "\n";
+				continue;
+			}
+			else {
+				for (int i = 0; i <= fabs(y - y2); i++) {
+					for (int j = 0; j <= fabs(x - x2); j++) {
+						board[i + y][j + x] = 'X';
+					}
+				}
+			}
+			draw(board, m, n);
+		}
+		else {
+			break;
+		}
+	}
+	return 0;
+}
+
+void draw(char board[][100], int m, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cout << board[i][j];
+		}
+		cout << "\n";
+	}
+	cout << "\n";
+}
