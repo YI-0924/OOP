@@ -1,0 +1,21 @@
+#include<iostream>
+#include<iomanip>
+
+using namespace std;
+
+int main() {
+	double X;
+	int M;
+	int N;
+	char C;
+	while (cin >> X >> M >> N >> C) 
+	{
+		if (isspace(C)) {
+			cout << fixed << setw(M) << setfill(' ') << setprecision(N) << X << "\n";
+		}
+		else {
+			cout << fixed << setw(M) << setfill(C) << setprecision(N) << X << "\n";
+		}
+	}
+	return 0;
+}
