@@ -10,12 +10,18 @@ int main() {
 	char C;
 	while (cin >> X >> M >> N >> C) 
 	{
-		if (isspace(C)) {
-			cout << fixed << setw(M) << setfill(' ') << setprecision(N) << X << "\n";
+		if (M > (N + 1)) {
+			if (isspace(C)) {
+				cout << fixed << setw(M) << setfill(' ') << setprecision(N) << X << "\n";
+			}
+			else {
+				cout << fixed << setw(M) << setfill(C) << setprecision(N) << X << "\n";
+			}
 		}
 		else {
-			cout << fixed << setw(M) << setfill(C) << setprecision(N) << X << "\n";
+			continue;
 		}
+		
 	}
 	return 0;
 }
