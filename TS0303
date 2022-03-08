@@ -4,6 +4,7 @@
 //Problem statement:This C++ program do basic input output.
 
 #include<iostream>
+#include<iomanip>
 #include<string>
 
 using namespace std;
@@ -32,15 +33,16 @@ int main() {
 					}
 				}
 				else {		//負整數
+					dotPosition = X.length();
 					if ((M - 1 - X.length()) >= 1) {		//負整數 need c
 						cLen = M - 1 - X.length();
 						frontLen = M - 1 - cLen;
-						backLen = 0;
+						backLen = N;
 					}
 					else {		//負整數 dont need c
 						cLen = 0;
 						frontLen = M - 1;
-						backLen = 0;
+						backLen = N;
 					}
 				}
 			}
@@ -59,15 +61,16 @@ int main() {
 					}
 				}
 				else {		//正整數
+					dotPosition = X.length();
 					if (M - X.length() >= 1) {		//正整數 need c
 						cLen = X.length() - M;
 						frontLen = M - cLen;
-						backLen = 0;
+						backLen = N;
 					}
 					else {		//正整數 dont need c
 						cLen = 0;
 						frontLen = M;
-						backLen = 0;
+						backLen = N;
 					}
 				}
 			}
@@ -75,13 +78,12 @@ int main() {
 		for (int i = 0; i < cLen; i++) {
 			cout << C;
 		}
-		for (int i = ( dotPosition - 1 ); i >= cLen; i--) {
+		for (int i = ( dotPosition - 1 ); i >= 0; i--) {
 			cout << X[i];
 		}
-		for (int i = (dotPosition + 1); i <= backLen; i++) {
-			cout << X[i];
+		for (int i = (dotPosition + 1); i <= (dotPosition + 1 + backLen); i++) {
+			cout << fixed << setprecision(N) << X[i] << "\n";
 		}
-		cout << "\n";
 	}
 	return 0;
 }
