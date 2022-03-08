@@ -1,11 +1,14 @@
 //Name:呂欣怡
 //Date:March 5,2022
-//Last Update:March ,2022
+//Last Update:March 8,2022
 //Problem statement:This C++ program do simple drawing.
+
+//should out of range,should x
 
 #include<iostream>
 #include<string>
 #include<iomanip>
+#include<cmath>
 
 using namespace std;
 
@@ -28,7 +31,7 @@ int main() {
 			if (w == 1) {
 				board[y][x] = 'X';
 			}
-			else if (w > m || w > n || x > m || y > n || (x + w) > m || (x - w) > m || (y + w) > n || (y - w) > n) {
+			else if (w > m || w > n || (x + w) > m || (y + w) > n || x > m - 1 || y > n - 1) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
@@ -46,7 +49,7 @@ int main() {
 			if (w == 1) {
 				board[y][x] = 'X';
 			}
-			else if (w > m || w > n || x > m || y > n) {
+			else if (w > m || w > n || x > m - 1 || y > n - 1 ) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
@@ -56,11 +59,9 @@ int main() {
 						cout << "Out of range.\n" << "\n";
 						continue;
 					}
-					for (int i = 0; i < w; i++) {
-						for (int j = 0; j < w; j++) {
-							if ((x + j) <= (y - i)) {
-								board[y - i][x + j] = 'X';
-							}
+					for (int i = x; i < x + w; i++) {
+						for (int j = y; j > y - w + i - x; j--) {
+							board[j][i] = 'X';
 						}
 					}
 				}
@@ -82,11 +83,9 @@ int main() {
 						cout << "Out of range.\n" << "\n";
 						continue;
 					}
-					for (int i = 0; i < w; i++) {
-						for (int j = 0; j < w; j++) {
-							if ((y + i) >= (x - j)) {
-								board[y + i][x - j] = 'X';
-							}
+					for (int i = x; i > x - w; i--) {
+						for (int j = y; j < y + w + i - x; j++) {
+							board[j][i] = 'X';
 						}
 					}
 				}
@@ -111,18 +110,58 @@ int main() {
 			if (x == x2 && y == y2) {
 				board[y][x] = 'X';
 			}
-			else if (x > m || y > n || x2 > m || y2 > n ) {
+			else if (x > m - 1 || y > n - 1 || x2 > m - 1 || y2 > n - 1) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
 			else {
-				for (int i = 0; i <= fabs(y - y2); i++) {
-					for (int j = 0; j <= fabs(x - x2); j++) {
-						if (y == y2 || x == x2) {
-							board[i + y][j + x] = 'X';
+				if (x == x2) {	//鉛直線
+					if (y2 > y) {
+						int ytmp = y2;
+						y2 = y;
+						y = ytmp;
+					}
+					for (int i = y2; i <= y; i++) {
+						board[i][x] = 'X';
+					}
+				}
+				else if (y == y2) {	//水平線
+					if (x2 > x) {
+						int xtmp = x2;
+						x2 = x;
+						x = xtmp;
+					}
+					for (int i = x2; i <= x; i++) {
+						board[y][i] = 'X';
+					}
+				}
+				else {
+					if (x > x2 && y > y2) {
+						int count = 0;
+						for (int i = x2; i <= x; i++) {
+							board[y2 + count][i] = 'X';
+							count++;
 						}
-						if ((i + y) == (j + x)) {
-							board[i + y][j + x] = 'X';
+					}
+					else if(x > x2 && y2 > y) {
+						int count = 0;
+						for (int i = x2; i <= x; i++) {
+							board[y2 - count][i] = 'X';
+							count++;
+						}
+					}
+					else if (x2 > x && y > y2) {
+						int count = 0;
+						for (int i = x; i <= x2; i++) {
+							board[y - count][i] = 'X';
+							count++;
+						}
+					}
+					else {	// x2 > x && y2 > y
+						int count = 0;
+						for (int i = x; i <= x2; i++) {
+							board[y + count][i] = 'X';
+							count++;
 						}
 					}
 				}
