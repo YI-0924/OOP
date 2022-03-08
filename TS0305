@@ -41,7 +41,7 @@ int main() {
 			if (w == 1) {
 				board[y][x] = 'X';
 			}
-			else if (w > m || w > n || x > m || y > n || (x + w) > m || (x - w) > m || (y + w) > n || (y - w) > n) {
+			else if (w > m || w > n || x > m || y > n ) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
@@ -49,48 +49,37 @@ int main() {
 				if (dir == "RU") {
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							board[y - i][x + j] = 'X';
-						}
-					}
-					for (int i = 0; i < w - 1; i++) {
-						for (int j = 0; j < w - 1 && j < i; j++) {
-							board[i][w - j - 1] = '*';
+							if ((x + j) <= (y - i)) {
+								board[y - i][x + j] = 'X';
+							}
 						}
 					}
 				}
 				else if (dir == "RD") {
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							board[y + i][x + j] = 'X';
-						}
-					}
-					for (int i = 0; i < w - 1; i++) {
-						for (int j = 0; j < w - 1; j++) {
-							board[w - i - 1][w - j - 1] = '*';
+							if ((y + i + x + j) < x + j + w - 1) {
+								board[y + i][x + j] = 'X';
+							}
 						}
 					}
 				}
 				else if (dir == "LD") {
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							board[y + i][x - j] = 'X';
-						}
-					}
-					for (int i = 0; i < w - 1; i++) {
-						for (int j = 0; j < w - 1 && j < i; j++) {
-							board[w - i - 1][j] = '*';
+							if ((y + i) >= (x - j)) {
+								board[y + i][x - j] = 'X';
+							}
 						}
 					}
 				}
 				else {
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							board[y - i][x - j] = 'X';
-						}
-					}
-					for (int i = 0; i < w - 1; i++) {
-						for (int j = 0; j < w - 1; j++) {
-							board[i][j] = '*';
+							if ((y - i + x - j) > x - j - w + 1 ) {
+								board[y - i][x - j] = 'X';
+								cout << y - i << "," << x - j << "=X" << "\n";
+							}
 						}
 					}
 				}
@@ -99,17 +88,19 @@ int main() {
 		}
 		else if (fig == 'L') {
 			cin >> x >> y >> x2 >> y2;
-			if (x == x2 || y == y2) {
+			if (x == x2 && y == y2) {
 				board[y][x] = 'X';
 			}
-			else if (x > m || y > n || x2 > m || y2 > n || fabs(x - x2) > m || fabs(y - y2) > n || (x + fabs(x - x2)) > m || (x - fabs(x - x2)) > m || (y + fabs(y - y2)) > n || (y - fabs(y - y2)) > n) {
+			else if (x > m || y > n || x2 > m || y2 > n ) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
 			else {
 				for (int i = 0; i <= fabs(y - y2); i++) {
 					for (int j = 0; j <= fabs(x - x2); j++) {
-						board[i + y][j + x] = 'X';
+						if ((i + y) == (j + x)) {
+							board[i + y][j + x] = 'X';
+						}
 					}
 				}
 			}
