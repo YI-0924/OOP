@@ -1,6 +1,6 @@
 //Name:呂欣怡
 //Date:March 5,2022
-//Last Update:March 5,2022
+//Last Update:March ,2022
 //Problem statement:This C++ program do simple drawing.
 
 #include<iostream>
@@ -46,12 +46,16 @@ int main() {
 			if (w == 1) {
 				board[y][x] = 'X';
 			}
-			else if (w > m || w > n || x > m || y > n ) {
+			else if (w > m || w > n || x > m || y > n) {
 				cout << "Out of range.\n" << "\n";
 				continue;
 			}
 			else {
 				if (dir == "RU") {
+					if (x + w + 1 > m || y - w + 1 < 0) {
+						cout << "Out of range.\n" << "\n";
+						continue;
+					}
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
 							if ((x + j) <= (y - i)) {
@@ -61,15 +65,23 @@ int main() {
 					}
 				}
 				else if (dir == "RD") {
+					if (x + w + 1 > m || y + w + 1 > n) {
+						cout << "Out of range.\n" << "\n";
+						continue;
+					}
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							if ((y + i + x + j) < x + j + w - 1) {
+							if ((y + i + x + j) < x + y + w) {
 								board[y + i][x + j] = 'X';
 							}
 						}
 					}
 				}
 				else if (dir == "LD") {
+					if (x - w + 1 < 0 || y + w + 1 > n) {
+						cout << "Out of range.\n" << "\n";
+						continue;
+					}
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
 							if ((y + i) >= (x - j)) {
@@ -79,11 +91,14 @@ int main() {
 					}
 				}
 				else {
+					if (x - w + 1 < 0 || y - w + 1 < 0) {
+						cout << "Out of range.\n" << "\n";
+						continue;
+					}
 					for (int i = 0; i < w; i++) {
 						for (int j = 0; j < w; j++) {
-							if ((y - i + x - j) > x - j - w + 1 ) {
+							if ((y - i + x - j) > x + y - w) {
 								board[y - i][x - j] = 'X';
-								cout << y - i << "," << x - j << "=X" << "\n";
 							}
 						}
 					}
