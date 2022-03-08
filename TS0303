@@ -1,27 +1,87 @@
+//Name:呂欣怡
+//Date:March 5,2022
+//Last Update:March 9,2022
+//Problem statement:This C++ program do basic input output.
+
 #include<iostream>
-#include<iomanip>
+#include<string>
 
 using namespace std;
 
 int main() {
-	double X;
+	string X;
 	int M;
 	int N;
 	char C;
 	while (cin >> X >> M >> N >> C) 
 	{
-		if (M > (N + 1)) {
-			if (isspace(C)) {
-				cout << fixed << setw(M) << setfill(' ') << setprecision(N) << X << "\n";
+		int dotPosition = 0, cLen = 0, frontLen = 0, backLen = 0;		//frontLen is without cLen
+		for (int i = 0; i < X.length(); i++) {
+			if (X[0] == '-') {		//negative
+				if (X[i] == '.') {		//負小數
+					dotPosition = i;
+					if (dotPosition < (M - N - 1 - 1)) {		//負小數 need c
+						cLen = M - N - 1 - 1 - dotPosition;
+						frontLen = dotPosition;
+						backLen = N;
+					}
+					else {		//負小數 dont need c
+						cLen = 0;
+						frontLen = M - N - 1 - 1;
+						backLen = N;
+					}
+				}
+				else {		//負整數
+					if ((M - 1 - X.length()) >= 1) {		//負整數 need c
+						cLen = M - 1 - X.length();
+						frontLen = M - 1 - cLen;
+						backLen = 0;
+					}
+					else {		//負整數 dont need c
+						cLen = 0;
+						frontLen = M - 1;
+						backLen = 0;
+					}
+				}
 			}
-			else {
-				cout << fixed << setw(M) << setfill(C) << setprecision(N) << X << "\n";
+			else {		//positive
+				if (X[i] == '.') {		//正小數
+					dotPosition = i;
+					if (dotPosition < (M - N - 1)) {		//正小數 need c
+						cLen = M - N - 1 - dotPosition;
+						frontLen = dotPosition;
+						backLen = N;
+					}
+					else {		//正小數 dont need c
+						cLen = 0;
+						frontLen = M - N - 1;
+						backLen = N;
+					}
+				}
+				else {		//正整數
+					if (M - X.length() >= 1) {		//正整數 need c
+						cLen = X.length() - M;
+						frontLen = M - cLen;
+						backLen = 0;
+					}
+					else {		//正整數 dont need c
+						cLen = 0;
+						frontLen = M;
+						backLen = 0;
+					}
+				}
 			}
 		}
-		else {
-			continue;
+		for (int i = 0; i < cLen; i++) {
+			cout << C;
 		}
-		
+		for (int i = ( dotPosition - 1 ); i >= cLen; i--) {
+			cout << X[i];
+		}
+		for (int i = (dotPosition + 1); i <= backLen; i++) {
+			cout << X[i];
+		}
+		cout << "\n";
 	}
 	return 0;
 }
