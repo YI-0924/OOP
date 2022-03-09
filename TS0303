@@ -17,61 +17,81 @@ int main() {
 	while (cin >> X >> M >> N >> C) 
 	{
 		int dotPosition = 0, cLen = 0, frontLen = 0, backLen = 0;		//frontLen is without cLen
-		for (int i = 0; i < X.length(); i++) {
-			if (X[0] == '-') {		//negative
-				if (X[i] == '.') {		//負小數
-					dotPosition = i;
-					if (dotPosition < (M - N - 1 - 1)) {		//負小數 need c
-						cLen = M - N - 1 - 1 - dotPosition;
-						frontLen = dotPosition;
-						backLen = N;
-					}
-					else {		//負小數 dont need c
-						cLen = 0;
-						frontLen = M - N - 1 - 1;
-						backLen = N;
-					}
+		dotPosition = X.find('.');
+		if (!isalnum(dotPosition)) {
+			dotPosition = X.length() - 1;
+		}
+		/*for (int i = 0; i < X.length(); i++) {
+			if (X[i] == '.') {
+				dotPosition = i;
+			}
+		}
+		dotPosition = X.length() - 1;*/
+		if (X[0] == '-') {		//negative
+			if (X[dotPosition] == '.') {		//負小數
+				if (dotPosition < (M - N - 1 - 1)) {		//負小數 need c
+					cLen = M - N - 1 - 1 - dotPosition;
+					frontLen = dotPosition;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
 				}
-				else {		//負整數
-					dotPosition = X.length() - 1;
-					if ((M - 1 - X.length()) >= 1) {		//負整數 need c
-						cLen = M - 1 - X.length();
-						frontLen = M - 1 - cLen;
-						backLen = N;
-					}
-					else {		//負整數 dont need c
-						cLen = 0;
-						frontLen = M - 1;
-						backLen = N;
-					}
+				else {		//負小數 dont need c
+					cLen = 0;
+					frontLen = M - N - 1 - 1;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
 				}
 			}
-			else {		//positive
-				if (X[i] == '.') {		//正小數
-					dotPosition = i;
-					if (dotPosition < (M - N - 1)) {		//正小數 need c
-						cLen = M - N - 1 - dotPosition;
-						frontLen = dotPosition;
-						backLen = N;
-					}
-					else {		//正小數 dont need c
-						cLen = 0;
-						frontLen = M - N - 1;
-						backLen = N;
-					}
+			else {		//負整數
+				if ((M - 1 - X.length()) >= 1) {		//負整數 need c
+					cLen = M - 1 - X.length();
+					frontLen = M - 1 - cLen;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
 				}
-				else {		//正整數
-					dotPosition = X.length() - 1;
-					if (M - X.length() >= 1) {		//正整數 need c
-						cLen = X.length() - M;
-						frontLen = M - cLen;
-						backLen = N;
-					}
-					else {		//正整數 dont need c
-						cLen = 0;
-						frontLen = M;
-						backLen = N;
-					}
+				else {		//負整數 dont need c
+					cLen = 0;
+					frontLen = M - 1;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
+				}
+			}
+		}
+		else {		//positive
+			if (X[dotPosition] == '.') {		//正小數
+				if (dotPosition < (M - N - 1)) {		//正小數 need c
+					cLen = M - N - 1 - dotPosition;
+					frontLen = dotPosition;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
+				}
+				else {		//正小數 dont need c
+					cLen = 0;
+					frontLen = M - N - 1;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
+				}
+			}
+			else {		//正整數
+				if (M - X.length() >= 1) {		//正整數 need c
+					cLen = X.length() - M;
+					frontLen = M - cLen;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
+				}
+				else {		//正整數 dont need c
+					cLen = 0;
+					frontLen = M;
+					backLen = N;
+					cout << "dotPosition:" << dotPosition;
+					cout << "\tcLen:" << cLen << "\tfrontLen:" << frontLen << "\tbackLen:" << backLen << "\n";
 				}
 			}
 		}
