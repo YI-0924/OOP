@@ -33,7 +33,7 @@ int main() {
 					}
 				}
 				else {		//負整數
-					dotPosition = X.length();
+					dotPosition = X.length() - 1;
 					if ((M - 1 - X.length()) >= 1) {		//負整數 need c
 						cLen = M - 1 - X.length();
 						frontLen = M - 1 - cLen;
@@ -61,7 +61,7 @@ int main() {
 					}
 				}
 				else {		//正整數
-					dotPosition = X.length();
+					dotPosition = X.length() - 1;
 					if (M - X.length() >= 1) {		//正整數 need c
 						cLen = X.length() - M;
 						frontLen = M - cLen;
@@ -75,14 +75,21 @@ int main() {
 				}
 			}
 		}
-		for (int i = 0; i < cLen; i++) {
-			cout << C;
+		if (cLen != 0) {
+			for (int i = 0; i < cLen; i++) {
+				cout << C;
+			}
 		}
-		for (int i = ( dotPosition - 1 ); i >= 0; i--) {
+		for (int i = (frontLen - 1); i <= ( dotPosition - 1 ); i++) {
 			cout << X[i];
 		}
-		for (int i = (dotPosition + 1); i <= (dotPosition + 1 + backLen); i++) {
-			cout << fixed << setprecision(N) << X[i] << "\n";
+		if (dotPosition != X.length()) {
+			cout << ".";
+		}
+		if (N != 0) {
+			for (int i = (dotPosition + 1); i < (dotPosition + 1 + backLen); i++) {
+				cout << fixed << setprecision(N) << X[i] << "\n";
+			}
 		}
 	}
 	return 0;
