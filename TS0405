@@ -1,0 +1,47 @@
+//Name:呂欣怡
+//Date:March 10,2022
+//Last Update:March 10,2022
+//Problem statement:Collatz Conjecture.
+
+#include<iostream>
+
+using namespace std;
+
+int main() {
+	int i = 0, j = 0;
+	while (cin >> i >> j && i < 1000000 && j < 1000000) {
+		int len[100] = { 0 };
+		int iPrint = i;
+		int jPrint = j;
+		if (j > i) {		//let i > j
+			int hold = i;
+			i = j;
+			j = hold;
+		}
+		int lenCount = 0;
+		for (int m = j; m <= i; m++) {
+			int N = m;
+			int count = 0;
+			while (N != 1) {
+				if (N % 2 == 0) {
+					N /= 2;
+					count++;
+				}
+				else {
+					N = N * 3 + 1;
+					count++;
+				}
+			}
+			len[lenCount] = count;
+			lenCount++;
+		}
+		cout << iPrint << " " << jPrint << " ";
+		int maxLen = 0;
+		for (int m = lenCount; m >= 0; m--) {
+			if (len[m] > maxLen) {
+				maxLen = len[m];
+			}
+		}
+		cout << maxLen + 1 << "\n";
+	}
+}
