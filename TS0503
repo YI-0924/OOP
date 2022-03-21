@@ -1,0 +1,297 @@
+//Name:呂欣怡
+//Date:March 17,2022
+//Last Update:March 20,2022
+//Problem statement:Student record.
+
+#include<iostream>
+#include<string>
+#include<cstring>
+
+using namespace std;
+
+typedef struct StRec {
+	char firstName[25];
+	char lastName[30];
+	char phone[15];
+} StRec;
+
+bool isNumber(const string& str);
+
+
+int main() {
+	StRec students[10];
+	string command;
+	string fName, lName, pNum;
+	int count = -1;
+
+	for (int i = 0; i < 10; i++) {		//initialization
+		for (int j = 0; j < 25; j++) {
+			students[i].firstName[j] = ' ';
+		}
+		for (int j = 0; j < 30; j++) {
+			students[i].lastName[j] = ' ';
+		}
+		for (int j = 0; j < 15; j++) {
+			students[i].phone[j] = ' ';
+		}
+	}
+
+	while (cin >> command) {
+		// ===== insert ===== //
+		if (command == "insert") {
+			count++;
+			cin >> fName >> lName >> pNum;
+
+			if (count > 9) {
+				cout << "Insert Error\n";
+				count--;
+				continue;
+			}
+
+			if (fName.length() > 25 || lName.length() > 30 || pNum.length() > 15) {
+				cout << "Input Error\n";
+				count--;
+				continue;
+			}
+
+			if (isNumber(pNum) == false) {
+				cout << "Input Error\n";
+				count--;
+				continue;
+			}
+
+			char fNameChk[25], lNameChk[30], pNumChk[15];
+			strcpy_s(fNameChk, fName.c_str());
+			strcpy_s(lNameChk, lName.c_str());
+			strcpy_s(pNumChk, pNum.c_str());
+
+			// ===== check whether it's exist ===== //
+			int chkExist = 1;		// not exist
+			int needToCheck = 0;
+			for (int i = 0; i <= count; i++) 
+			{
+				if (students[i].firstName[0] == fNameChk[0]) 
+				{
+					needToCheck = i;
+					for (int j = 0; j < 25 && students[needToCheck].firstName[j] != ' '; j++)
+					{
+						if (students[needToCheck].firstName[j] == fNameChk[j])
+						{
+							chkExist = 0;		// continue to check
+						}
+						else 
+						{
+							chkExist = 1;
+							break;
+						}
+					}
+					if (chkExist == 0)
+					{
+						for (int j = 0; j < 30 && students[needToCheck].lastName[j] != ' '; j++)
+						{
+							if (students[needToCheck].lastName[j] == lNameChk[j])
+							{
+								chkExist = 0;		// continue to check
+							}
+							else {
+								chkExist = 1;
+								break;
+							}
+						}
+					}
+					if (chkExist == 0)
+					{
+						for (int j = 0; j < 15 && students[needToCheck].phone[j] != ' '; j++)
+						{
+							if (students[needToCheck].phone[j] == pNumChk[j])
+							{
+								chkExist = 0;		// continue to check
+							}
+							else {
+								chkExist = 1;
+								break;
+							}
+						}
+					}
+					if (chkExist == 0) 
+					{
+						break;		// already exist
+					}
+				}
+			}
+
+			if (chkExist == 0)			
+			{
+				cout << "Insert Error\n";
+				count--;
+				continue;
+			}
+			else		//insert
+			{
+				strcpy_s(students[count].firstName, fName.c_str());
+				strcpy_s(students[count].lastName, lName.c_str());
+				strcpy_s(students[count].phone, pNum.c_str());
+			}
+			
+		}
+
+
+		// ===== delete ===== //
+		else if (command == "delete") {
+			cin >> fName >> lName >> pNum;
+
+			char fNameChk[25], lNameChk[30], pNumChk[15];
+			strcpy_s(fNameChk, fName.c_str());
+			strcpy_s(lNameChk, lName.c_str());
+			strcpy_s(pNumChk, pNum.c_str());
+
+			// ===== check whether there's a data to delete ===== //
+			int chkExist = 1;		//all the same(exist)
+			int deleteI = -1;
+			for (int i = 0; i <= count; i++) {
+				chkExist = 1;
+				for (int j = 0; j < 25 && students[i].firstName[j] != ' '; j++) {
+					if (students[i].firstName[j] != fNameChk[j]) {
+						chkExist = 0;		//different(not exist)
+						continue;
+					}
+				}
+				if (chkExist == 1) {
+					for (int j = 0; j < 30 && students[i].lastName[j] != ' '; j++) {
+						if (students[i].lastName[j] != lNameChk[j]) {
+							chkExist = 0;
+							continue;
+						}
+					}
+				}
+				if (chkExist == 1) {
+					for (int j = 0; j < 15 && students[i].phone[j] != ' '; j++) {
+						if (students[i].phone[j] != pNumChk[j]) {
+							chkExist = 0;
+							continue;
+						}
+					}
+				}
+				if (chkExist == 1) {
+					deleteI = i;
+					break;
+				}
+			}
+
+			if (deleteI == -1) {
+				cout << "Delete Error\n";
+				continue;
+			}
+			else {		//delete
+
+				//拿掉deleteI，其他count往前一格
+				for (int i = deleteI; i < count; i++) {
+					for (int j = 0; j < 25; j++) {
+						students[i].firstName[j] = students[i + 1].firstName[j];
+					}
+					for (int j = 0; j < 30; j++) {
+						students[i].lastName[j] = students[i + 1].lastName[j];
+					}
+					for (int j = 0; j < 15; j++) {
+						students[i].phone[j] = students[i + 1].phone[j];
+					}
+				}
+				count--;
+			}
+		}
+
+
+		// ===== search ===== //
+		else if (command == "search") {
+			cin >> fName >> lName >> pNum;
+
+			char fNameChk[25], lNameChk[30], pNumChk[15];
+			strcpy_s(fNameChk, fName.c_str());
+			strcpy_s(lNameChk, lName.c_str());
+			strcpy_s(pNumChk, pNum.c_str());
+
+			// ===== check whether there's a data ===== //
+			int chkExist = 1;		//all the same(exist)
+			int searchI = -1;
+			for (int i = 0; i <= count; i++) {
+				chkExist = 1;
+				for (int j = 0; j < 25 && students[i].firstName[j] != ' '; j++) {
+					if (students[i].firstName[j] != fNameChk[j]) {
+						chkExist = 0;		//different(not exist)
+						break;
+					}
+				}
+				if (chkExist == 1) {
+					for (int j = 0; j < 30 && students[i].lastName[j] != ' '; j++) {
+						if (students[i].lastName[j] != lNameChk[j]) {
+							chkExist = 0;
+							break;
+						}
+					}
+				}
+				if (chkExist == 1) {
+					for (int j = 0; j < 15 && students[i].phone[j] != ' '; j++) {
+						if (students[i].phone[j] != pNumChk[j]) {
+							chkExist = 0;
+							break;
+						}
+					}
+				}
+				if (chkExist == 1) {
+					searchI = i;
+					break;
+				}
+			}
+
+			if (searchI == -1) {
+				cout << "Search Error\n";
+				continue;
+			}
+			else {
+				cout << searchI << "\n";
+			}
+
+			
+		}
+
+
+		// ===== print ===== //
+		else if (command == "print") {
+			if (count == -1) {
+				cout << "Print Error\n";
+			}
+			else {
+				for (int i = 0; i <= count; i++) {
+					cout << students[i].firstName;
+					cout << " ";
+					cout << students[i].lastName;
+					cout << " ";
+					cout << students[i].phone;
+					cout << "\n";
+					
+				}
+			}
+
+			
+		}
+
+		
+		// ===== others ===== //
+		else {
+			cout << "Input Error\n";
+		}
+	}
+
+	return 0;
+}
+
+
+bool isNumber(const string& str)
+{
+	for (char const& c : str) {
+		if (isdigit(c) == 0) {
+			return false;
+		}
+	}
+	return true;
+}
