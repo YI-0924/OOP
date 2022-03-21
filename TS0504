@@ -10,7 +10,6 @@
 
 using namespace std;
 
-bool checkSum(int sudoku[][9]);
 bool checkNum(int sudoku[][9]);
 
 int main()
@@ -50,7 +49,7 @@ int main()
 
 		//============ start to check ====================//
 
-		if (/*checkSum(sudoku) == true &&*/ checkNum(sudoku) == true)
+		if (checkNum(sudoku) == true)
 		{
 			cout << "True\n";
 		}
@@ -63,54 +62,6 @@ int main()
 
 	return 0;
 }
-
-/*
-bool checkSum(int sudoku[][9]) 
-{
-	//===== count the sum that sudoku should have =====//
-	/*int sum = 0;
-	for (int i = 1; i <= 9; i++)
-	{
-		sum += i;
-	}
-	*/
-
-
-	//====== add the sum of the sudoku that is going to check ======//
-	//int totalSum1 = 0;
-	//int totalSum2 = 0;				
-	// rowSum = totalSum1    columnSum = totalSum2
-	/*for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++) 
-		{
-			totalSum1 += sudoku[i][j];
-			totalSum2 += sudoku[j][i];
-		}
-		if (totalSum1 != 45 || totalSum2 != 45) 
-		{
-			return false;
-		}
-		else 
-		{
-			totalSum1 = 0;
-			totalSum2 = 0;
-		}
-	}*/
-
-	//===== check whether the sum of the sudoku is correct =====//
-	/*for (int i = 0; i < 18; i++)
-	{
-		if (totalSum[i] != sum)
-		{
-			return false;
-		}
-	}
-	*/
-
-
-//	return true;
-//}
 
 
 bool checkNum(int sudoku[][9]) 
