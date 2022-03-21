@@ -1,2 +1,2 @@
-TS0303 : [3.1-Input_Output.docx](https://github.com/YI-0924/week3/files/8192650/3.1-Input_Output.docx)
-TS0305 : [3.3-Simple_Drawing_Program.docx](https://github.com/YI-0924/week3/files/8192652/3.3-Simple_Drawing_Program.docx)
+TS0503 : [5.3-Student_Record.docx](https://github.com/YI-0924/OOP/files/8313215/5.3-Student_Record.docx)
+TS0504 :[Sudoku Checker.docx](https://github.com/YI-0924/OOP/files/8313217/Sudoku.Checker.docx)
