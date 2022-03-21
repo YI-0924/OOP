@@ -1,0 +1,186 @@
+//Name:呂欣怡
+//Date:March 17,2022
+//Last Update:March 20,2022
+//Problem statement:Sudoku checker.
+
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<algorithm>
+
+using namespace std;
+
+bool checkSum(int sudoku[][9]);
+bool checkNum(int sudoku[][9]);
+
+int main()
+{
+
+	int sudoku[9][9] = { 0 };
+	string input;
+	string token;
+
+	while (cin >> input) {
+		int i = 0, j = 0;
+		stringstream delim(input);
+
+		while (j < 9)
+		{
+			getline(delim, token, ',');
+			sudoku[i][j] = stoi(token);
+			j++;
+		}
+		j = 0;
+		i++;
+
+		while (i < 9 && cin >> input)
+		{
+			stringstream delim(input);
+			while (j < 9) 
+			{
+				getline(delim, token, ',');
+				sudoku[i][j] = stoi(token);
+				j++;
+			}
+			j = 0;
+			i++;
+		}
+		
+		//============ finished input in int type ===========//
+
+		//============ start to check ====================//
+
+		if (/*checkSum(sudoku) == true &&*/ checkNum(sudoku) == true)
+		{
+			cout << "True\n";
+		}
+		else 
+		{
+			cout << "False\n";
+		}
+
+	}
+
+	return 0;
+}
+
+/*
+bool checkSum(int sudoku[][9]) 
+{
+	//===== count the sum that sudoku should have =====//
+	/*int sum = 0;
+	for (int i = 1; i <= 9; i++)
+	{
+		sum += i;
+	}
+	*/
+
+
+	//====== add the sum of the sudoku that is going to check ======//
+	//int totalSum1 = 0;
+	//int totalSum2 = 0;				
+	// rowSum = totalSum1    columnSum = totalSum2
+	/*for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++) 
+		{
+			totalSum1 += sudoku[i][j];
+			totalSum2 += sudoku[j][i];
+		}
+		if (totalSum1 != 45 || totalSum2 != 45) 
+		{
+			return false;
+		}
+		else 
+		{
+			totalSum1 = 0;
+			totalSum2 = 0;
+		}
+	}*/
+
+	//===== check whether the sum of the sudoku is correct =====//
+	/*for (int i = 0; i < 18; i++)
+	{
+		if (totalSum[i] != sum)
+		{
+			return false;
+		}
+	}
+	*/
+
+
+//	return true;
+//}
+
+
+bool checkNum(int sudoku[][9]) 
+{
+	int numToCheck[9] = { 0 };
+
+	//===== check whether the sudoku get 1 to 9 in every row =====//
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			numToCheck[j] = sudoku[i][j];		// put i row into numToCheck
+		}
+		sort(numToCheck, numToCheck + 9);		// put it 1 to 9
+		for (int m = 0; m < 9; m++)
+		{
+			if (numToCheck[m] != m + 1) 
+			{
+				return false;
+			}
+		}
+	}
+
+	//===== check whether the sudoku get 1 to 9 in every column =====//
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			numToCheck[j] = sudoku[j][i];		// put i column into numToCheck
+
+		}
+		sort(numToCheck, numToCheck + 9);		// put it 1 to 9
+		for (int m = 0; m < 9; m++)
+		{
+			if (numToCheck[m] != m + 1)
+			{
+				return false;
+			}
+		}
+	}
+
+	//===== check whether the sudoku get 1 to 9 in every square =====//
+	int nRow = 0;
+	int nCol = 0;
+	int count = 0;
+	while (nRow < 9)
+	{
+		while (nCol < 9)
+		{
+			for (int i = 0; i < 3; i++) 
+			{
+				for (int j = 0; j < 3; j++) 
+				{
+					numToCheck[count] = sudoku[i + nRow][j + nCol];		// put square into numToCheck
+					count++;
+				}
+			}
+			sort(numToCheck, numToCheck + 9);		// put it 1 to 9
+			for (int m = 0; m < 9; m++)
+			{
+				if (numToCheck[m] != m + 1)
+				{
+					return false;
+				}
+			}
+			nCol += 3;
+		}
+		nCol = 0;
+		nRow += 3;
+	}
+
+	return true;
+}
