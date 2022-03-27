@@ -1,6 +1,6 @@
 //Name:呂欣怡
 //Date:March 22,2022
-//Last Update:March 22,2022
+//Last Update:March 27,2022
 //Problem statement:Number Game.
 
 
@@ -26,6 +26,7 @@ void NumberGame::ProcessInput() // splitting the integer A into several digits.
 		seperate[i] = aTest % 10;
 		aTest /= 10;
 	}
+	sort(seperate, seperate + count);
 }
 void NumberGame::SetFileName(string name) // set the file name of the file where list S is located.
 {
@@ -36,6 +37,7 @@ void NumberGame::LoadNumberList() // read list S from the file.
 	while (infile >> E[countE]) {
 		countE++;
 	}
+	sort(E,E+countE);
 	infile.close();
 }
 void NumberGame::PrintAllValid() // print all the valid numbers in S ascendingly
@@ -51,8 +53,11 @@ void NumberGame::PrintAllValid() // print all the valid numbers in S ascendingly
 	for (int i = 0; i <= countE; i++) {
 		int chkNum = E[i];
 		for (int j = count - 1; j >= 0 ; j--) {
-			if (seperate[j] != 0  && chkNum != 1 && chkNum % seperate[j] == 0) {
+			if (seperate[j] != 0 && chkNum % seperate[j] == 0) {
 				chkNum /= seperate[j];
+				if (chkNum == 1) {
+					break;
+				}
 			}
 		}
 		if(chkNum == 1 && whether1 == 1) {
