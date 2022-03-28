@@ -1,6 +1,6 @@
 //Name:呂欣怡
 //Date:March 27,2022
-//Last Update:March 27,2022
+//Last Update:March 28,2022
 //Problem statement:Dim Vector.
 
 #include "VecNf.h"
@@ -16,14 +16,20 @@ VecNf::VecNf()
 VecNf::VecNf(float* dest, int cnt)
 {
 	dimension = cnt;
-	value = dest;
+	value = new float[dimension];
+	for (int i = 0; i < dimension; i++) {
+		value[i] = dest[i];
+	}
 }
 
 //Construct a new vector from a VecNf.
 VecNf::VecNf(const VecNf& rhs)
 {
 	dimension = rhs.dimension;
-	value = rhs.value;
+	value = new float[dimension];
+	for (int i = 0; i < dimension; i++) {
+		value[i] = rhs.value[i];
+	}
 }
 
 float& VecNf::operator[](int i) 
@@ -31,12 +37,14 @@ float& VecNf::operator[](int i)
 	return value[i];
 }
 
-VecNf VecNf::operator=(VecNf v)
+void VecNf::operator=(VecNf v)
 {
 	cout << "ASSIGNMENT!!!" << endl;
 	dimension = v.dimension;
-	value = v.value;
-	return *this;
+	value = new float[dimension];
+	for (int i = 0; i < dimension; i++) {
+		value[i] = v.value[i];
+	}
 }
 
 VecNf VecNf::operator+(VecNf v)
