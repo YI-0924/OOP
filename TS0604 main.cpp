@@ -1,6 +1,6 @@
 //Name:呂欣怡
 //Date:March 27,2022
-//Last Update:March 27,2022
+//Last Update:March 28,2022
 //Problem statement:Dim Vector.
 
 #include<iostream>
@@ -35,6 +35,10 @@ int main() {
 	cout << C * B << endl; // Scale
 
 	cout << A * C << endl; // Inconsistent
+
+	float f = 5.0;
+	cout << B * f ;
+	cout << endl;
 
 	return 0;
 
