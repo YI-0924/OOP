@@ -103,6 +103,12 @@ float VecNf::operator*(VecNf v)
 
 VecNf VecNf::operator*(float f)
 {
+	/*string delim = "f";
+	string num;
+	int pos = f.find(delim);
+	num = f.substr(0, pos);
+	double d = stod(num);
+	*/
 	VecNf ans;
 	ans.dimension = dimension;
 	ans.value = new float[ans.dimension]{ 0 };
@@ -115,4 +121,14 @@ VecNf VecNf::operator*(float f)
 int VecNf::Size()
 {
 	return dimension;
+}
+
+ostream& operator<<(ostream& strm, const VecNf& v)
+{
+	int dimension = v.dimension;
+	for (int i = 0; i < dimension; i++) {
+		strm << v.value[i] << " ";
+	}
+	
+	return strm;
 }
