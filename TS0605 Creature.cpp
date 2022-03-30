@@ -1,3 +1,8 @@
+//Name:呂欣怡
+//Date:March 27,2022
+//Last Update:March 29,2022
+//Problem statement:Observation diary.
+
 #include"Creature.h"
 
 //Contains a creature named name.
@@ -16,53 +21,36 @@ Creature::Creature(string name, Creature base)
 }
 
 //For example: c["leg"]: return to the body part of Creature c named "leg".
-string Creature::operator[](Creature c)
+Creature Creature::operator[](string name)
 {
-	int find = -1;
-	for (int i = 0; i < count; i++) {
-		if (bodyPartName != c.bodyPartName) {
-
-		}
-		else {
-			find = i;
-		}
-	}
-	if (find != -1) {
-		return c.bodyPartName[find];
-	}
-	
+	bodyPartName[count] = name;
+	return *this;
 }
 
 //For example: c["leg"] = 3: set the number of body parts in Creature c named "leg" to 3 
 //and record "sample's leg appeared (0 -> 3)" in the log. 
-void Creature::operator=(Creature c)
+Creature Creature::operator=(int num)
 {
-	while (bodyPartName != c.bodyPartName) {
-		bodyPartName++;
-	}
-	bodyPartNum[count] = c.bodyPartNum[count];
+	bodyPartNum[count] = num;
+	return *this;
 }
 
 //For example: c["leg"] += 2: the number of body parts named "leg" increases by 2,
 //so the number of body parts named "leg" becomes 5.
 //And please record "sample's leg increased (3 -> 5)" in the log.
-void Creature::operator+=(Creature c)
+Creature Creature::operator+=(int num)
 {
-	while (bodyPartName != c.bodyPartName) {
-		bodyPartName++;
-	}
-	bodyPartNum[count] += c.bodyPartNum[count];
+	bodyPartNum[count] += num;
+	return *this;
 }
 
 //For example: c["leg"] -= 2: the number of body parts named "leg" decreases by 2, 
 //so the number of body parts named "leg" becomes 3.
 //And please record "sample's leg decreased (5 -> 3)" in the log.
-void Creature::operator-=(Creature c)
+Creature Creature::operator-=(int num)
 {
-	while (bodyPartName != c.bodyPartName) {
-		bodyPartName++;
-	}
-	bodyPartNum[count] -= c.bodyPartNum[count];
+	bodyPartNum -= num;
+	return *this;
 }
 
 
