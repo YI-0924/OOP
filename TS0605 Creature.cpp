@@ -29,28 +29,25 @@ Creature Creature::operator[](string name)
 
 //For example: c["leg"] = 3: set the number of body parts in Creature c named "leg" to 3 
 //and record "sample's leg appeared (0 -> 3)" in the log. 
-Creature Creature::operator=(int num)
+void Creature::operator=(int num)
 {
 	bodyPartNum[count] = num;
-	return *this;
 }
 
 //For example: c["leg"] += 2: the number of body parts named "leg" increases by 2,
 //so the number of body parts named "leg" becomes 5.
 //And please record "sample's leg increased (3 -> 5)" in the log.
-Creature Creature::operator+=(int num)
+void Creature::operator+=(int num)
 {
 	bodyPartNum[count] += num;
-	return *this;
 }
 
 //For example: c["leg"] -= 2: the number of body parts named "leg" decreases by 2, 
 //so the number of body parts named "leg" becomes 3.
 //And please record "sample's leg decreased (5 -> 3)" in the log.
-Creature Creature::operator-=(int num)
+void Creature::operator-=(int num)
 {
 	bodyPartNum -= num;
-	return *this;
 }
 
 
