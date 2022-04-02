@@ -1,1 +1,7 @@
-TS0605 : [Uploading 6.3-Observation_Diary.docx…]()
+to 4/5 : TS0702[7.2-Array_To_Integer.docx](https://github.com/YI-0924/OOP/files/8401672/7.2-Array_To_Integer.docx)
+         TS0704[7.2-Levenshtein_Distance.docx](https://github.com/YI-0924/OOP/files/8401677/7.2-Levenshtein_Distance.docx)
+         TS0706[7.3-Shisensho.docx](https://github.com/YI-0924/OOP/files/8401678/7.3-Shisensho.docx)
+         TS0701[7.1-Form_Word.docx](https://github.com/YI-0924/OOP/files/8401685/7.1-Form_Word.docx)  
+               [words.txt](https://github.com/YI- 0924/OOP/files/8401687/words.txt)
+         TS0703[7.1-Seven-segment_Display.docx](https://github.com/YI-0924/OOP/files/8401689/7.1-Seven-segment_Display.docx)
+         TS0705[7.3-Cow_Calculation.docx](https://github.com/YI-0924/OOP/files/8401690/7.3-Cow_Calculation.docx)
