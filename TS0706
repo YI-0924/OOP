@@ -1,111 +1,172 @@
 //Name:呂欣怡
 //Date:April 3,2022
-//Last Update:April 3,2022
+//Last Update:April 4,2022
 //Problem statement:Shisensho
 
 #include<iostream>
 
 using namespace std;
 
-bool sameNum(int array[][8], int x1, int y1, int x2, int y2);
-bool havePath(int array[][8], int x1, int y1, int x2, int y2);
-bool twoTurns(int array[][8], int x1, int y1, int x2, int y2);
+bool changed(int matrix[][8], int x1, int y1, int x2, int y2);
+bool isPath(int matrix[][8]);
+bool isSafe(int i, int j, int matrix[][8]);
+bool isPath(int matrix[][8], int i, int j, bool visited[][8], int turns[50], int count);
 
 int main() {
-	int array[8][8] = { 0 };
-	int space;
+	int matrix[8][8] = { 0 };
+    int matrixChange[8][8] = { 0 };
 	int x1, x2, y1, y2;
 
-	//put in array
+	//put data into array
 	for (int i = 1; i <= 6; i++) {
 		for (int j = 1; j <= 6; j++) {
-			cin >> array[i][j];
-			cin >> space;
+			cin >> matrix[i][j];
 		}
 	}
 
-	while (cin >> x1 >> space >> y1 >> space >> x2 >> space >> y2) {
-		if (sameNum(array, x1, y1, x2, y2) == true) {		//whether it's same number
-			if (havePath(array, x1, y1, x2, y2) == true) {		//whether there's a path between two number
-				if (twoTurns(array, x1, y1, x2, y2) == true) {		//whether it's in two turns
-					array[y1][x1] = 0;		//eliminate
-					array[y2][x2] = 0;		//eliminate
-					cout << "pair matched" << endl;
-					continue;
-				}
-			}
-		}
-		cout << "bad pair" << endl;
+	while (cin >> x1 >> y1 >> x2 >> y2) {
+
+        x1++;
+        y1++;
+        x2++;
+        y2++;
+        if (matrix[y1][x1] != matrix[y2][x2]) {
+            cout << "bad pair\n";
+            continue;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                matrixChange[i][j] = matrix[i][j];
+            }
+        }
+        if (changed(matrixChange, x1, y1, x2, y2)) {
+            matrix[y1][x1] = 0;
+            matrix[y2][x2] = 0;
+        }
 	}
 	return 0;
 }
 
-//whether it's same number
-bool sameNum(int array[][8], int x1, int y1, int x2, int y2)
+bool changed(int matrix[][8], int x1, int y1, int x2, int y2)
 {
-	if (array[y1][x1] == array[y2][x2]) {
-		return true;
-	}
-	return false;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (i == y1 && j == x1) {
+                matrix[y1][x1] = 1;     //start
+            }
+            else if (i == y2 && j == x2) {
+                matrix[y2][x2] = 2;     //destination
+            }
+            else if (matrix[i][j] != 0) {       //0 is the path
+                matrix[i][j] = 3;       //blocked (cannot walk)
+            }
+        }
+    }
+
+    if (isPath(matrix)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
-//whether there's a path between two number and it's in two turns
-bool havePath(int array[][8], int x1, int y1, int x2, int y2)
+bool isPath(int matrix[][8])
 {
-	char dir;				// 1 to 2 should 朝向哪
-	int countDir = 0;		//countDir has to be <=2
-	int _x = x1 - x2;
-	int _y = y1 - y2;
-	if (_x == 0 && _y != 0) {
-		if (_y > 0) {		// 1在下面
-			dir = 'u';		//要往上
-		}
-		else {
-			dir = 'd';		//要往下
-		}
-	}
-	else if (_x != 0 && _y == 0) {
-		if (_x > 0) {		// 1在右邊
-			dir = 'l';		//要往左
-		}
-		else {
-			dir = 'r';		//要往右
-		}
-	}
-	else {
-		if (_x > 0 && _y > 0) {		// 1在右下
-			dir = 'lu';				// 1要往左上
-		}
-		else if (_x > 0 && _y < 0) {		// 1在右上	
-			dir = 'ld';				// 1要往左下
-		}
-		else if (_x < 0 && _y > 0) {			// 1在左下
-			dir = 'ru';				// 1要往右上
-		}
-		else {						// 1在左上
-			dir = 'rd';				// 1要往右下
-		}
-	}
-	//find the 0 (the path)
-	switch (dir) {		// 1 to 2 should 朝向哪
-	case'u':
-		while (y1 > y2) {
+    int turns[50] = { 0 };      //input every move
+    int count = 0;      //count every move
 
-		}
-		break;
-	case'd':
-		break;
-	case'l':
-		break;
-	case'r':
-		break;
-	case'lu':
-		break;
-	case'ld':
-		break;
-	case'ru':
-		break;
-	case'rd':
-		break;
-	}
+    bool visited[8][8];
+    
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            visited[i][j] = false;
+        }
+    }
+
+    bool flag = false;      //whether the path exist
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (matrix[i][j] == 1 && !visited[i][j])        //start from i j
+            {
+                if (isPath(matrix, i, j, visited, turns, count))          //can find the path to 2
+                {
+                    flag = true;        //path exist
+                    break;
+                }
+            }
+        }
+    }
+    int turnTimes = 0;
+    if (flag) {
+        for (int i = 1; i < 50 && turns[i] != 0; i++) {       //whether it's in two turns
+            if (turns[i] != 0 && turns[i+1] != 0 && turns[i] != turns[i + 1]) {
+                turnTimes++;
+            }
+        }
+        if (turnTimes <= 2) {
+            cout << "pair matched\n";
+            return true;
+        }
+        else {
+            cout << "bad pair\n";
+            return false;
+        }
+    }
+    else {
+        cout << "bad pair\n";
+        return false;
+    }
+}
+
+bool isSafe(int i, int j, int matrix[][8])
+{
+    if (i >= 0 && i < 8 && j >= 0 && j < 8) {
+        return true;
+    }
+    return false;
+}
+
+bool isPath(int matrix[][8], int i, int j, bool visited[][8], int turns[50], int count)
+{
+    if (isSafe(i, j, matrix) && !visited[i][j] && matrix[i][j] != 3)
+    {
+        visited[i][j] = true;       //pos that has already visited
+
+        if (matrix[i][j] == 2)
+            return true;
+
+        bool down = isPath(matrix, i + 1, j, visited, turns, count++);
+        if (down) {
+            turns[count] = 3;      //down = 3
+            cout << turns[count];
+            return true;
+        }
+
+        bool right = isPath(matrix, i, j + 1, visited, turns, count++);
+        if (right) {
+            turns[count] = 4;      //right = 4
+            cout << turns[count];
+            return true;
+        }
+
+        bool up = isPath(matrix, i - 1, j, visited, turns, count++);
+        if (up) {
+            turns[count] = 1;      //up = 1
+            cout << turns[count];
+            return true;
+        }
+
+        bool left = isPath(matrix, i, j - 1, visited, turns, count++);
+        if (left) {
+            turns[count] = 2;      //left = 2
+            cout << turns[count];
+            return true;
+        }
+    }
+
+    return false;
 }
