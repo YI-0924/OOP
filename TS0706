@@ -1,0 +1,111 @@
+//Name:呂欣怡
+//Date:April 3,2022
+//Last Update:April 3,2022
+//Problem statement:Shisensho
+
+#include<iostream>
+
+using namespace std;
+
+bool sameNum(int array[][8], int x1, int y1, int x2, int y2);
+bool havePath(int array[][8], int x1, int y1, int x2, int y2);
+bool twoTurns(int array[][8], int x1, int y1, int x2, int y2);
+
+int main() {
+	int array[8][8] = { 0 };
+	int space;
+	int x1, x2, y1, y2;
+
+	//put in array
+	for (int i = 1; i <= 6; i++) {
+		for (int j = 1; j <= 6; j++) {
+			cin >> array[i][j];
+			cin >> space;
+		}
+	}
+
+	while (cin >> x1 >> space >> y1 >> space >> x2 >> space >> y2) {
+		if (sameNum(array, x1, y1, x2, y2) == true) {		//whether it's same number
+			if (havePath(array, x1, y1, x2, y2) == true) {		//whether there's a path between two number
+				if (twoTurns(array, x1, y1, x2, y2) == true) {		//whether it's in two turns
+					array[y1][x1] = 0;		//eliminate
+					array[y2][x2] = 0;		//eliminate
+					cout << "pair matched" << endl;
+					continue;
+				}
+			}
+		}
+		cout << "bad pair" << endl;
+	}
+	return 0;
+}
+
+//whether it's same number
+bool sameNum(int array[][8], int x1, int y1, int x2, int y2)
+{
+	if (array[y1][x1] == array[y2][x2]) {
+		return true;
+	}
+	return false;
+}
+
+//whether there's a path between two number and it's in two turns
+bool havePath(int array[][8], int x1, int y1, int x2, int y2)
+{
+	char dir;				// 1 to 2 should 朝向哪
+	int countDir = 0;		//countDir has to be <=2
+	int _x = x1 - x2;
+	int _y = y1 - y2;
+	if (_x == 0 && _y != 0) {
+		if (_y > 0) {		// 1在下面
+			dir = 'u';		//要往上
+		}
+		else {
+			dir = 'd';		//要往下
+		}
+	}
+	else if (_x != 0 && _y == 0) {
+		if (_x > 0) {		// 1在右邊
+			dir = 'l';		//要往左
+		}
+		else {
+			dir = 'r';		//要往右
+		}
+	}
+	else {
+		if (_x > 0 && _y > 0) {		// 1在右下
+			dir = 'lu';				// 1要往左上
+		}
+		else if (_x > 0 && _y < 0) {		// 1在右上	
+			dir = 'ld';				// 1要往左下
+		}
+		else if (_x < 0 && _y > 0) {			// 1在左下
+			dir = 'ru';				// 1要往右上
+		}
+		else {						// 1在左上
+			dir = 'rd';				// 1要往右下
+		}
+	}
+	//find the 0 (the path)
+	switch (dir) {		// 1 to 2 should 朝向哪
+	case'u':
+		while (y1 > y2) {
+
+		}
+		break;
+	case'd':
+		break;
+	case'l':
+		break;
+	case'r':
+		break;
+	case'lu':
+		break;
+	case'ld':
+		break;
+	case'ru':
+		break;
+	case'rd':
+		break;
+	}
+}
